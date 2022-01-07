@@ -1,25 +1,34 @@
-import logo from './logo.svg';
+import React, { useState, useEffect } from "react"
+import {AppProvider} from '@shopify/polaris';
+import HttpClient from "./HttpClient"
+import Header from './components/Header'
+import CardComponent from './components/CardComponent'
 import './App.css';
 
-function App() {
+
+const App = () => {
+  const [items, setItems] = useState({})
+
+  useEffect(() => {
+    HttpClient.getItem().then(itemData => {
+      setItems(itemData.data)
+    })
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+      <AppProvider className="App">
+        <div className="App-header">
+          <Header/>
+          <CardComponent item={items}/>
+          <CardComponent item={items}/>
+          <CardComponent item={items}/>
+          <CardComponent item={items}/>
+          <CardComponent item={items}/>
+          <CardComponent item={items}/>
+        </div>
+      </AppProvider>
+  )
 }
 
-export default App;
+export default App
